@@ -1,9 +1,15 @@
-import { useReducer, createContext, ReactNode, useContext } from 'react';
+import { useReducer, createContext, useContext } from 'react';
 import { v4 as uuid } from 'uuid';
 import { faker } from '@faker-js/faker';
 
 import { generateTasks } from 'helpers/generateTasks';
-import { IColumn, IState, DraggableLocation } from 'helpers/types';
+import {
+  IColumn,
+  IState,
+  Action,
+  Dispatch,
+  ProviderProps,
+} from 'helpers/types';
 
 const ColumnNames = [
   { title: 'Backlog', userCanAddTask: true },
@@ -30,25 +36,6 @@ const initialState: IState = {
     columns,
   },
 };
-
-type Action =
-  | {
-      type: 'ADD_TASK';
-      payload: {
-        columnId: string;
-        taskTitle: string;
-      };
-    }
-  | {
-      type: 'MOVE_TASK';
-      payload: {
-        source: DraggableLocation;
-        destination: DraggableLocation;
-      };
-    };
-
-type Dispatch = (action: Action) => void;
-type ProviderProps = { children: ReactNode };
 
 export const BoardContext = createContext<
   { state: IState; dispatch: Dispatch } | undefined

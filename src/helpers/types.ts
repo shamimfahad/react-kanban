@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 export type ITask = {
   id: string;
   title: string;
@@ -25,3 +27,22 @@ export type DraggableLocation = {
   droppableId: string;
   index: number;
 };
+
+export type Action =
+  | {
+      type: 'ADD_TASK';
+      payload: {
+        columnId: string;
+        taskTitle: string;
+      };
+    }
+  | {
+      type: 'MOVE_TASK';
+      payload: {
+        source: DraggableLocation;
+        destination: DraggableLocation;
+      };
+    };
+
+export type Dispatch = (action: Action) => void;
+export type ProviderProps = { children: ReactNode };
