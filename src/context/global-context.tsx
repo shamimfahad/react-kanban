@@ -37,7 +37,7 @@ const initialState: IState = {
   },
 };
 
-export const BoardContext = createContext<
+export const GlobalContext = createContext<
   { state: IState; dispatch: Dispatch } | undefined
 >(undefined);
 
@@ -149,22 +149,22 @@ const boardReducer = (state: IState, action: Action) => {
   }
 };
 
-function BoardContextProvider({ children }: ProviderProps) {
+function GlobalContextProvider({ children }: ProviderProps) {
   const [state, dispatch] = useReducer(boardReducer, initialState);
   const value = { state, dispatch };
   return (
-    <BoardContext.Provider value={value}>{children}</BoardContext.Provider>
+    <GlobalContext.Provider value={value}>{children}</GlobalContext.Provider>
   );
 }
 
-function useBoardContext() {
-  const context = useContext(BoardContext);
+function useGlobalContext() {
+  const context = useContext(GlobalContext);
   if (context === undefined) {
     throw new Error(
-      'useBoardContext must be used within a BoardContextProvider'
+      'useGlobalContext must be used within a GlobalContextProvider'
     );
   }
   return context;
 }
 
-export { BoardContextProvider, useBoardContext };
+export { GlobalContextProvider, useGlobalContext };

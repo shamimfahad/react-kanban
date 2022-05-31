@@ -1,16 +1,16 @@
-import { BoardContextProvider } from 'context/board-context';
+import { GlobalContextProvider } from 'context/global-context';
 
 import Board from './components/board/board.component';
 import { AppBanner, AppContainer } from 'App.styles';
 
 const App = () => {
   return (
-    <BoardContextProvider>
+    <GlobalContextProvider>
       <AppContainer>
         <AppBanner>React Kanban</AppBanner>
         <Board />
       </AppContainer>
-    </BoardContextProvider>
+    </GlobalContextProvider>
   );
 };
 

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { useBoardContext } from 'context/board-context';
+import { useGlobalContext } from 'context/global-context';
 import { IColumn } from 'helpers/types';
 
 import {
@@ -21,7 +21,7 @@ const Column = (props: IColumnProps) => {
   const { column, index } = props;
   const [showTaskInput, setShowTaskInput] = useState<boolean>(false);
   const [taskTitle, setTaskTitle] = useState<string>('');
-  const { dispatch } = useBoardContext();
+  const { dispatch } = useGlobalContext();
 
   const toggleTaskInput = () => {
     setShowTaskInput(!showTaskInput);

@@ -1,6 +1,6 @@
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 
-import { useBoardContext } from 'context/board-context';
+import { useGlobalContext } from 'context/global-context';
 
 import Column from '../column/column.component';
 
@@ -10,7 +10,7 @@ const Board = () => {
   const {
     state: { currentBoard },
     dispatch,
-  } = useBoardContext();
+  } = useGlobalContext();
 
   const dragEnd = (result: DropResult) => {
     if (!result.destination) return;

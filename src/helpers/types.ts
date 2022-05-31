@@ -28,6 +28,10 @@ export type DraggableLocation = {
   index: number;
 };
 
+export type Dispatch = (action: Action) => void;
+
+export type ProviderProps = { children: ReactNode };
+
 export type Action =
   | {
       type: 'ADD_TASK';
@@ -43,6 +47,3 @@ export type Action =
         destination: DraggableLocation;
       };
     };
-
-export type Dispatch = (action: Action) => void;
-export type ProviderProps = { children: ReactNode };
