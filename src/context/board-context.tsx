@@ -1,35 +1,9 @@
 import { useReducer, createContext, ReactNode, useContext } from 'react';
 import { v4 as uuid } from 'uuid';
 import { faker } from '@faker-js/faker';
+
 import { generateTasks } from 'helpers/generateTasks';
-
-export type ITask = {
-  id: string;
-  title: string;
-  positionInColumn: number;
-};
-
-export type IColumn = {
-  id: string;
-  title: string;
-  userCanAddTask: boolean;
-  tasks: ITask[];
-};
-
-export type Board = {
-  id: string;
-  title: string;
-  columns: IColumn[];
-};
-
-export type State = {
-  currentBoard: Board;
-};
-
-export type DraggableLocation = {
-  droppableId: string;
-  index: number;
-};
+import { IColumn, IState, DraggableLocation } from 'helpers/types';
 
 const ColumnNames = [
   { title: 'Backlog', userCanAddTask: true },
@@ -37,16 +11,19 @@ const ColumnNames = [
   { title: 'In Progress', userCanAddTask: false },
   { title: 'Done', userCanAddTask: false },
 ];
+
 const columns: IColumn[] = ColumnNames.map((columnName) => {
+  const { title, userCanAddTask } = columnName;
   return {
     id: uuid(),
-    title: columnName.title,
-    userCanAddTask: columnName.userCanAddTask ?? false,
-    tasks: generateTasks(faker.mersenne.rand(100, 2)),
+    title,
+    userCanAddTask,
+    // you can update no of tasks you want to generate here
+    tasks: generateTasks(faker.mersenne.rand(100000, 2)),
   };
 });
 
-const initialState: State = {
+const initialState: IState = {
   currentBoard: {
     id: uuid(),
     title: 'Kanban Board',
@@ -74,10 +51,10 @@ type Dispatch = (action: Action) => void;
 type ProviderProps = { children: ReactNode };
 
 export const BoardContext = createContext<
-  { state: State; dispatch: Dispatch } | undefined
+  { state: IState; dispatch: Dispatch } | undefined
 >(undefined);
 
-const boardReducer = (state: State, action: Action) => {
+const boardReducer = (state: IState, action: Action) => {
   switch (action.type) {
     case 'ADD_TASK':
       return {

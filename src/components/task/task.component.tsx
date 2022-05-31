@@ -1,30 +1,33 @@
-import { ITask } from 'context/board-context';
-import { Draggable } from 'react-beautiful-dnd';
+import { DraggableProvided } from 'react-beautiful-dnd';
+
+import { ITask } from 'helpers/types';
+
 import { TaskContainer } from './task.styles';
+import getStyle from 'helpers/getStyle';
 
 interface ITaskProps {
   task: ITask;
-  index: number;
+  provided: DraggableProvided;
+  isDragging: boolean;
+  style: any;
 }
 
 const Task = (props: ITaskProps) => {
-  const { task, index } = props;
+  const { task, provided, isDragging, style } = props;
   return (
-    <Draggable draggableId={task.id} key={task.id} index={index}>
-      {(provided, snapshot) => {
-        const allowedProps = { ref: provided.innerRef };
-        return (
-          <TaskContainer
-            {...allowedProps}
-            {...provided.draggableProps}
-            {...provided.dragHandleProps}
-            isDragging={snapshot.isDragging}
-          >
-            <h3>{task.title}</h3>
-          </TaskContainer>
-        );
-      }}
-    </Draggable>
+    <TaskContainer
+      ref={provided.innerRef}
+      {...provided.draggableProps}
+      {...provided.dragHandleProps}
+      isDragging={isDragging}
+      style={getStyle({
+        draggableStyle: provided.draggableProps.style,
+        virtualStyle: style,
+        isDragging,
+      })}
+    >
+      <h3>{task.title}</h3>
+    </TaskContainer>
   );
 };
 

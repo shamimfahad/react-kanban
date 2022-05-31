@@ -4,11 +4,11 @@ export const TaskContainer = styled.div<{ isDragging: boolean }>`
   display: flex;
   flex-direction: column;
   padding: 0.5rem;
-  border: 1px solid #ccc;
+  border: 1px solid;
   border-radius: 0.25rem;
-  width: calc(100% - 1.1rem);
   cursor: grab;
-  background-color: ${({ isDragging }) => (isDragging ? '#f5f5f5' : '#fff')};
+
+  border-color: ${({ isDragging }) => (isDragging ? '#EC7063' : '#ccc')};
 
   h3 {
     margin: 0;

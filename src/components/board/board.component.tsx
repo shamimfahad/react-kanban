@@ -1,6 +1,6 @@
-import { useBoardContext } from 'context/board-context';
-
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
+
+import { useBoardContext } from 'context/board-context';
 
 import Column from '../column/column.component';
 

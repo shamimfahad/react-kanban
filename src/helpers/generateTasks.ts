@@ -9,7 +9,7 @@ export const generateTasks = (length: number) => {
   return Array.from(Array(length)).map((task, index) => {
     return {
       id: uuid(),
-      title: faker.lorem.sentence(),
+      title: faker.lorem.sentence(5),
       positionInColumn: index,
     };
   });

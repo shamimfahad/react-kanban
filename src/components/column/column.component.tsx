@@ -1,15 +1,16 @@
-import { IColumn, useBoardContext } from 'context/board-context';
 import { useState } from 'react';
-import { Droppable } from 'react-beautiful-dnd';
 
-import Task from '../task/task.component';
+import { useBoardContext } from 'context/board-context';
+import { IColumn } from 'helpers/types';
+
 import {
   AddTask,
   ColumnContainer,
   ColumnHeader,
+  ColumnName,
   TaskInput,
-  TasksContainer,
 } from './column.styles';
+import TasksContainer from './tasks-container.component';
 
 interface IColumnProps {
   column: IColumn;
@@ -17,7 +18,7 @@ interface IColumnProps {
 }
 
 const Column = (props: IColumnProps) => {
-  const { column } = props;
+  const { column, index } = props;
   const [showTaskInput, setShowTaskInput] = useState<boolean>(false);
   const [taskTitle, setTaskTitle] = useState<string>('');
   const { dispatch } = useBoardContext();
@@ -46,14 +47,18 @@ const Column = (props: IColumnProps) => {
 
   return (
     <ColumnContainer>
+      {/* Column Header */}
       <ColumnHeader>
-        <h3>{column.title}</h3>
+        <ColumnName name={column.title.toLowerCase().replace(/ /g, '-')}>
+          {column.title}
+        </ColumnName>
         {column.userCanAddTask && (
           <AddTask onClick={toggleTaskInput}>
             {showTaskInput ? <>&#8722;</> : <>&#43;</>}
           </AddTask>
         )}
       </ColumnHeader>
+      {/* Create Task Input */}
       {showTaskInput && (
         <TaskInput
           onChange={(e) => {
@@ -63,19 +68,8 @@ const Column = (props: IColumnProps) => {
           onKeyDown={addTask}
         />
       )}
-      <Droppable droppableId={column.id} key={column.id}>
-        {(provided, snapshot) => (
-          <TasksContainer
-            {...provided.droppableProps}
-            ref={provided.innerRef}
-            isDraggingOver={snapshot.isDraggingOver}
-          >
-            {column.tasks.map((task, index) => (
-              <Task key={task.id} task={task} index={index} />
-            ))}
-          </TasksContainer>
-        )}
-      </Droppable>
+      {/* Droppable zone of column */}
+      <TasksContainer column={column} index={index} />
     </ColumnContainer>
   );
 };

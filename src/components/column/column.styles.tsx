@@ -9,18 +9,9 @@ export const ColumnContainer = styled.div`
   position: relative;
 `;
 
-export const TasksContainer = styled.div<{ isDraggingOver: boolean }>`
-  padding: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  width: calc(100% - 1rem);
-  position: relative;
-  flex-grow: 1;
+export const TasksContainerDiv = styled.div<{ isDraggingOver?: boolean }>`
   background-color: ${({ isDraggingOver }) =>
-    isDraggingOver ? '#f5f5f5' : '#fff'};
-  border-radius: 0.25rem;
-  height: 600px;
+    isDraggingOver ? '#EBF5FB' : '#fff'};
 `;
 
 export const AddTask = styled.button`
@@ -50,6 +41,17 @@ export const ColumnHeader = styled.div`
   ${AddTask} {
     justify-self: flex-end;
   }
+`;
+
+export const ColumnName = styled.h3<{ name: string }>`
+  color: ${({ name }) =>
+    name === 'to-do'
+      ? 'darkorange'
+      : name === 'in-progress'
+      ? 'dodgerblue'
+      : name === 'done'
+      ? 'limegreen'
+      : '#333'};
 `;
 
 export const TaskInput = styled.input.attrs({
